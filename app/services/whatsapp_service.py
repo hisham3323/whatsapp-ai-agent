@@ -8,7 +8,10 @@ async def send_whatsapp_message(to_number: str, text_body: str) -> bool:
     """
     Sends a text message back to the user via the WhatsApp Cloud API.
     """
+    # ---- NEW DEBUG LOGS ADDED HERE ----
     if not settings.WHATSAPP_TOKEN or not settings.WHATSAPP_PHONE_NUMBER_ID:
+        logger.error(f"DEBUG: Token present? {bool(settings.WHATSAPP_TOKEN)}")
+        logger.error(f"DEBUG: Phone ID present? {bool(settings.WHATSAPP_PHONE_NUMBER_ID)}")
         logger.error("Missing WhatsApp credentials in environment variables.")
         return False
 
