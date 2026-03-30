@@ -1,5 +1,5 @@
 import logging
-from app.core.redis import redis_client
+from app.core.redis import get_redis
 
 logger = logging.getLogger(__name__)
 
@@ -10,6 +10,8 @@ async def is_message_processed(message_id: str) -> bool:
     Returns True if already processed (duplicate), False if it's a new message.
     """
     redis_key = f"wa_msg:{message_id}"
+    
+    redis_client = await get_redis()
     
     # We use Redis SET with NX (Set if Not eXists) to prevent race conditions.
     # ex=86400 sets an expiration of 24 hours so our Redis memory doesn't fill up forever.
